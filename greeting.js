@@ -5,16 +5,32 @@ const form = document.querySelector(".js-form"),
 const USER_LS = "currentUser";
 const SHOWING_CN = "showing";
 
-function paintGreeting(Text) {
+function saveName(text) {
+  localStorage.setItem(USER_LS, text);
+}
+
+function handleSubmit() {
+  event.preventDefault();
+  var userName = input.value;
+  paintGreeting(userName);
+  saveName(userName);
+}
+
+function askForName() {
+  form.classList.add(SHOWING_CN);
+  form.addEventListener("submit", handleSubmit);
+}
+
+function paintGreeting(text) {
   form.classList.remove(SHOWING_CN);
   greeting.classList.add(SHOWING_CN);
-  greeting.innerText = `Hello ${Text}`;
+  greeting.innerText = `Hello ${text}`;
 }
 
 function loadName() {
   const currentUser = localStorage.getItem(USER_LS);
   if (currentUser === null) {
-    // 처음 들어옴
+    askForName();
   } else {
     paintGreeting(currentUser);
   }
