@@ -7,11 +7,14 @@ function getTime() {
   var Min = date.getMinutes();
   var Sec = date.getSeconds();
 
-  clockTitle.innerText = `${Hour}:${Min}:${Sec}`;
+  clockTitle.innerText = `${Hour < 10 ? `0${Hour}` : Hour}:${
+    Min < 10 ? `0${Min}` : Min
+  }:${Sec < 10 ? `0${Sec}` : Sec}`;
 }
 
 function init() {
   getTime();
+  setInterval(getTime, 1000);
 }
 
 init();
