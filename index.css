@@ -1,5 +1,8 @@
-body {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.form,
+.greeting {
+  display: none;
+}
+
+.showing {
+  display: block;
 }
