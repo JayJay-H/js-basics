@@ -3,8 +3,14 @@ const toDoForm = document.querySelector(".js-toDoForm"),
   toDoList = document.querySelector(".js-toDoList");
 
 const TODOS_LS = "toDos";
+const toDos = [];
+
+function saveToDos() {
+  localStorage.setItem(TODOS_LS, JSON.stringify(toDos));
+}
 
 function paintToDo(text) {
+  var newId = toDos.length + 1;
   var li = document.createElement("li");
   var deleteBtn = document.createElement("button");
   deleteBtn.innerText = "❌";
@@ -12,7 +18,15 @@ function paintToDo(text) {
   span.innerText = text;
   li.appendChild(deleteBtn);
   li.appendChild(span);
+  li.id = newId;
   toDoList.appendChild(li);
+
+  var toDo = {
+    text: text,
+    id: newId
+  };
+  toDos.push(toDo);
+  saveToDos();
 }
 
 function handleSubmit() {
@@ -23,9 +37,13 @@ function handleSubmit() {
 }
 
 function loadToDos() {
-  var toDos = localStorage.getItem(TODOS_LS);
-  if (toDos !== null) {
-    // 보여줘야지~
+  var loadedToDos = localStorage.getItem(TODOS_LS);
+
+  if (loadedToDos !== null) {
+    var parseToDos = JSON.parse(loadedToDos);
+    parseToDos.forEach(function(toDo) {
+      paintToDo(toDo.text);
+    });
   }
 }
 
